@@ -40,11 +40,11 @@ import boto3
 import base64
 
 # Update your endpoint name
-ENDPOINT = "image-classification-2025-03-31-02-55-28-786"
+ENDPOINT = "image-classification-2025-04-03-05-45-18-812"
 runtime = boto3.client('sagemaker-runtime')
 def lambda_handler(event, context):
     # Decode image from base64
-    image = base64.b64decode(event["image_data"])
+    image = base64.b64decode(event["body"]["image_data"])
     # Invoke SageMaker endpoint
     response = runtime.invoke_endpoint(
         EndpointName=ENDPOINT,
@@ -56,11 +56,11 @@ def lambda_handler(event, context):
     result = response['Body'].read().decode('utf-8')
     
     # Update event and return
-    event["inferences"] = json.loads(result)
+    event['body']["inferences"] = json.loads(result)
     
     return {
         'statusCode': 200,
-        'body': json.dumps(event)
+        'body': event['body']
     }
 
 
@@ -87,5 +87,5 @@ def lambda_handler(event, context):
 
     return {
         'statusCode': 200,
-        'body': json.dumps(event)
+        'body': event['body']
     }
