@@ -76,7 +76,7 @@ def lambda_handler(event, context):
     inferences = event["inferences"]
     
     # Check if any values in our inferences are above THRESHOLD
-    meets_threshold = THRESHOLD ## TODO: fill in
+    meets_threshold = max(inferences) > THRESHOLD ## TODO: fill in
     
     # If our threshold is met, pass our data back out of the
     # Step Function, else, end the Step Function with an error
